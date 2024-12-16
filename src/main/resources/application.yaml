@@ -1,0 +1,38 @@
+spring:
+  application:
+    name: VkFriendsWeather
+
+  jpa:
+    generate-ddl: true
+    open-in-view: true
+  datasource:
+    url: jdbc:postgresql://localhost:5435/friends
+    username: postgres
+    password: postgres
+
+  security:
+    oauth2:
+      client:
+        registration:
+          vk:
+            client-id: 52847344
+            client-secret: MSkThKw7QCy24AN9mKQg
+            redirect-uri: "https://schedule.tunom.ru/oauth2/callback/vk"
+            authorization-grant-type: authorization_code
+            client-authentication-method: post
+            scope: email
+            client-name: VK
+            provider: vk
+        provider:
+          vk:
+            authorization-uri: https://oauth.vk.com/authorize
+            token-uri: https://oauth.vk.com/access_token
+            user-info-uri: https://api.vk.com/method/users.get
+            user-name-attribute: id
+
+server:
+  port: 8088
+
+springdoc:
+  api-docs:
+    path: /api-docs
