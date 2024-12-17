@@ -4,12 +4,23 @@ services:
 
   postgres:
     container_name: postgres_db
-    image: postgres:latest
+    image: postgres
     ports:
       - "5435:5432"
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=friends
-    volumes:
-      - /etc/database/db-friends:/var/lib/postgresql/data
+
+  vk-friends:
+    image: vk-friends-image
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8090:8090"
+    environment:
+      - SERVER_PORT=8090
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres/friends
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres

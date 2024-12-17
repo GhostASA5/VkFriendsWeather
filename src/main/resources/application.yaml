@@ -17,7 +17,7 @@ spring:
           vk:
             client-id: 52847344
             client-secret: MSkThKw7QCy24AN9mKQg
-            redirect-uri: "https://schedule.tunom.ru/oauth2/callback/vk"
+            redirect-uri: "https://oauth.tunom.ru/oauth2/callback/vk"
             authorization-grant-type: authorization_code
             client-authentication-method: post
             scope: email
@@ -31,7 +31,7 @@ spring:
             user-name-attribute: id
 
 server:
-  port: 8088
+  port: 8090
 
 springdoc:
   api-docs:
