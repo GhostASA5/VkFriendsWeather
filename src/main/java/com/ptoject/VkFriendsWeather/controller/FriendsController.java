@@ -1,9 +1,9 @@
 package com.ptoject.VkFriendsWeather.controller;
 
 import com.ptoject.VkFriendsWeather.service.FriendsService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,15 +14,9 @@ public class FriendsController {
 
     private final FriendsService friendsService;
 
-    @PostMapping("/saveFriends")
-    public void saveFriends(@RequestHeader("Authorization") String token) {
-        friendsService.save(getToken(token));
+    @GetMapping("/saveFriends")
+    public void saveFriends(HttpServletRequest request) {
+        friendsService.save(request.getHeader("Authorization").substring(7));
     }
 
-    private String getToken(String token) {
-        if (token != null && token.startsWith("Bearer ")) {
-            return token.substring(7);
-        }
-        return "";
-    }
 }

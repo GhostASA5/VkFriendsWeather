@@ -2,22 +2,25 @@ spring:
   application:
     name: VkFriendsWeather
 
+  profiles:
+    active: env
+
   jpa:
     generate-ddl: true
     open-in-view: true
   datasource:
-    url: jdbc:postgresql://localhost:5435/friends
-    username: postgres
-    password: postgres
+    url: jdbc:postgresql://${DB_HOST}:${DB_PORT}/friends
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
 
   security:
     oauth2:
       client:
         registration:
           vk:
-            client-id: 52847344
-            client-secret: MSkThKw7QCy24AN9mKQg
-            redirect-uri: "https://oauth.tunom.ru/oauth2/callback/vk"
+            client-id: ${VK_CLIENT_ID}
+            client-secret: ${VK_CLIENT_SECRET}
+            redirect-uri: ${VK_REDIRECT_URL}
             authorization-grant-type: authorization_code
             client-authentication-method: post
             scope: email
@@ -36,3 +39,9 @@ server:
 springdoc:
   api-docs:
     path: /api-docs
+
+app:
+  weather:
+    apiKey: ${WEATHER_API_KEY}
+    units: metric
+    lang: ru

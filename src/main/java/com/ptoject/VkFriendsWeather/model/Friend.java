@@ -28,4 +28,8 @@ public class Friend {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User userFriend;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "weather_id")
+    private Weather weather;
 }

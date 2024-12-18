@@ -4,6 +4,7 @@ import com.ptoject.VkFriendsWeather.exception.FriendException;
 import com.ptoject.VkFriendsWeather.exception.UserNotFoundException;
 import com.ptoject.VkFriendsWeather.model.Friend;
 import com.ptoject.VkFriendsWeather.model.User;
+import com.ptoject.VkFriendsWeather.model.Weather;
 import com.ptoject.VkFriendsWeather.repository.FriendsRepository;
 import com.ptoject.VkFriendsWeather.repository.UserRepository;
 import com.vk.api.sdk.client.actors.ServiceActor;
@@ -24,12 +25,14 @@ import java.util.stream.Collectors;
 @Slf4j
 public class FriendsService extends ApiClientService{
 
+    private final WeatherService weatherService;
+
     private final UserRepository userRepository;
 
     private final FriendsRepository friendsRepository;
 
     public void save(String token) {
-        log.error("Start saving user: token - {}", token);
+        log.info("Start saving user friends: token - {}", token);
         try {
             ServiceActor actor = getServiceActor(token);
             List<Long> friendIds = vk.friends().get(actor)
@@ -65,6 +68,8 @@ public class FriendsService extends ApiClientService{
                         .build();
                 if (response.getCity() != null) {
                     friend.setCity(response.getCity().getTitle());
+                    Weather weather = weatherService.loadWeather(response.getCity().getTitle());
+                    friend.setWeather(weather);
                 }
                 friendsRepository.save(friend);
             }

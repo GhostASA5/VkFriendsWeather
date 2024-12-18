@@ -13,7 +13,7 @@ services:
       - POSTGRES_DB=friends
 
   vk-friends:
-    image: vk-friends-image
+    image: vk-friends-image:latest
     build:
       context: .
       dockerfile: Dockerfile
@@ -24,3 +24,5 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres/friends
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=postgres
+    depends_on:
+      - postgres
